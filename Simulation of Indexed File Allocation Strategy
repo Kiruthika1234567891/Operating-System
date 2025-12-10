@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int indexBlock[50], dataBlocks[50], n, i;
+
+    printf("Enter number of blocks for the file: ");
+    scanf("%d", &n);
+
+    printf("Enter block numbers to store the file:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &dataBlocks[i]);
+
+    for (i = 0; i < n; i++)
+        indexBlock[i] = dataBlocks[i];
+
+    printf("\nIndex Block:\n");
+    for (i = 0; i < n; i++)
+        printf("Index %d -> Block %d\n", i, indexBlock[i]);
+
+    printf("\nEnter index to access data block: ");
+    scanf("%d", &i);
+
+    if (i >= 0 && i < n)
+        printf("Accessing Block: %d\n", indexBlock[i]);
+    else
+        printf("Invalid index\n");
+
+    return 0;
+}
