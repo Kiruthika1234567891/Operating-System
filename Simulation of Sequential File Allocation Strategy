@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n, i, rec;
+    char records[50][100];
+
+    printf("Enter number of records: ");
+    scanf("%d", &n);
+
+    printf("Enter records:\n");
+    for (i = 0; i < n; i++)
+        scanf("%s", records[i]);
+
+    printf("\nSequential File Allocation Completed.\n");
+
+    printf("\nEnter record number to access (1 to %d): ", n);
+    scanf("%d", &rec);
+
+    if (rec < 1 || rec > n) {
+        printf("Invalid record number\n");
+        return 0;
+    }
+
+    printf("\nAccessing records sequentially:\n");
+    for (i = 0; i < rec; i++)
+        printf("Record %d: %s\n", i + 1, records[i]);
+
+    return 0;
+}
