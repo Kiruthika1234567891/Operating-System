@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char filename[50], pattern[50], line[200];
+    FILE *fp;
+
+    printf("Enter filename: ");
+    scanf("%s", filename);
+
+    printf("Enter pattern to search: ");
+    scanf("%s", pattern);
+
+    fp = fopen(filename, "r");
+    if (!fp)
+        return 0;
+
+    while (fgets(line, sizeof(line), fp)) {
+        if (strstr(line, pattern))
+            printf("%s", line);
+    }
+
+    fclose(fp);
+    return 0;
+}
