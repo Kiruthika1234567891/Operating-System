@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    FILE *fp;
+    int choice;
+    char filename[50], data[200];
+
+    while (1) {
+        printf("\n1. Create File\n2. Write File\n3. Read File\n4. Append File\n5. Delete File\n6. Exit\nEnter choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 1) {
+            printf("Enter filename: ");
+            scanf("%s", filename);
+            fp = fopen(filename, "w");
+            fclose(fp);
+            printf("File created.\n");
+        }
+
+        else if (choice == 2) {
+            printf("Enter filename: ");
+            scanf("%s", filename);
+            fp = fopen(filename, "w");
+            printf("Enter data: ");
+            scanf(" %[^\n]", data);
+            fputs(data, fp);
+            fclose(fp);
+            printf("Data written.\n");
+        }
+
+        else if (choice == 3) {
+            printf("Enter filename: ");
+            scanf("%s", filename);
+            fp = fopen(filename, "r");
+            if (!fp) {
+                printf("File not found.\n");
+                continue;
+            }
+            while (fgets(data, sizeof(data), fp))
+                printf("%s", data);
+            fclose(fp);
+        }
+
+        else if (choice == 4) {
+            printf("Enter filename: ");
+            scanf("%s", filename);
+            fp = fopen(filename, "a");
+            printf("Enter data: ");
+            scanf(" %[^\n]", data);
+            fputs(data, fp);
+            fclose(fp);
+            printf("Data appended.\n");
+        }
+
+        else if (choice == 5) {
+            printf("Enter filename: ");
+            scanf("%s", filename);
+            remove(filename);
+            printf("File deleted.\n");
+        }
+
+        else if (choice == 6) {
+            return 0;
+        }
+    }
+}
