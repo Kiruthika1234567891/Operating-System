@@ -1,0 +1,63 @@
+#include <stdio.h>
+
+int main() {
+    int pages[50], frames[10], used[10];
+    int n, f, i, j, k, pageFaults = 0, least;
+
+    printf("Enter number of pages: ");
+    scanf("%d", &n);
+
+    printf("Enter the page reference string: ");
+    for (i = 0; i < n; i++)
+        scanf("%d", &pages[i]);
+
+    printf("Enter number of frames: ");
+    scanf("%d", &f);
+
+    for (i = 0; i < f; i++) {
+        frames[i] = -1;
+        used[i] = -1;
+    }
+
+    printf("\nLRU Page Replacement Simulation:\n");
+
+    for (i = 0; i < n; i++) {
+        int found = 0;
+
+        for (j = 0; j < f; j++) {
+            if (frames[j] == pages[i]) {
+                found = 1;
+                used[j] = i;
+            }
+        }
+
+        if (!found) {
+            int pos = 0;
+            least = used[0];
+
+            for (k = 1; k < f; k++) {
+                if (used[k] < least) {
+                    least = used[k];
+                    pos = k;
+                }
+            }
+
+            frames[pos] = pages[i];
+            used[pos] = i;
+            pageFaults++;
+        }
+
+        printf("Page %d → ", pages[i]);
+        for (k = 0; k < f; k++) {
+            if (frames[k] == -1)
+                printf("- ");
+            else
+                printf("%d ", frames[k]);
+        }
+        printf("\n");
+    }
+
+    printf("\nTotal Page Faults = %d\n", pageFaults);
+
+    return 0;
+}
