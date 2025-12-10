@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+int mutex = 1;         // binary semaphore for critical section
+int full = 0;          // counts filled buffer slots
+int empty = 5;         // counts empty buffer slots (buffer size = 5)
+int item = 0;          // produced item count
+
+int wait(int s) {
+    return (--s);
+}
+
+int signal(int s) {
+    return (++s);
+}
+
+void producer() {
+    if(mutex == 1 && empty != 0) {
+        mutex = wait(mutex);
+        full = signal(full);
+        empty = wait(empty);
+        item++;
+        printf("Producer produced item %d\n", item);
+        mutex = signal(mutex);
+    } else {
+        printf("Buffer is FULL! Producer cannot produce.\n");
+    }
+}
+
+void consumer() {
+    if(mutex == 1 && full != 0) {
+        mutex = wait(mutex);
+        full = wait(full);
+        empty = signal(empty);
+        printf("Consumer consumed item %d\n", item);
+        item--;
+        mutex = signal(mutex);
+    } else {
+        printf("Buffer is EMPTY! Consumer cannot consume.\n");
+    }
+}
+
+int main() {
+    int choice;
+
+    printf("Producer-Consumer Problem Simulation using Semaphores\n");
+
+    while(1) {
+        printf("\n1. Produce\n2. Consume\n3. Exit");
+        printf("\nEnter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: producer(); break;
+            case 2: consumer(); break;
+            case 3: return 0;
+            default: printf("Invalid choice!\n");
+        }
+    }
+}
