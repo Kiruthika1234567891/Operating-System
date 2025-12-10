@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int n, i;
+    int blocks[50], next[50];
+    int start, end;
+
+    printf("Enter number of blocks in file: ");
+    scanf("%d", &n);
+
+    printf("Enter block numbers:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &blocks[i]);
+
+    for (i = 0; i < n - 1; i++)
+        next[blocks[i]] = blocks[i + 1];
+
+    next[blocks[n - 1]] = -1;
+
+    start = blocks[0];
+    end = blocks[n - 1];
+
+    printf("\nDirectory:\n");
+    printf("Start Block: %d\n", start);
+    printf("End Block: %d\n", end);
+
+    printf("\nFile stored as linked list of blocks:\n");
+    int cur = start;
+    while (cur != -1) {
+        printf("%d -> ", cur);
+        cur = next[cur];
+    }
+    printf("NULL\n");
+
+    return 0;
+}
